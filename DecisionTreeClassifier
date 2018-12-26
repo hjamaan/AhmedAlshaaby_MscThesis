@@ -16,7 +16,6 @@ X[X == '?'] = -1
 X = X.astype('float')
 y = y + 0 
 y = np.expand_dims(y, 1)
-# load the iris datasets
 model = DecisionTreeClassifier()
 model.fit(X, y)
 cv_results = cross_validate(model, X, y, cv=10, return_train_score=False)
