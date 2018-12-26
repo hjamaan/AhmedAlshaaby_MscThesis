@@ -1,0 +1,38 @@
+import pandas as pd
+import numpy as np
+from sklearn import datasets
+from sklearn import metrics
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.model_selection import cross_validate
+from sklearn.model_selection import cross_val_score
+from sklearn.ensemble import RandomForestClassifier
+from sklearn import preprocessing 
+from sklearn.preprocessing import MinMaxScaler
+
+df= pd.read_csv('E:\\New folder\Dropbox\Thesis\DataAnalysis\Datasets\ReadyDatasets\OS1_Data_Class.csv')
+y = df.pop('is_data_class').values
+df.pop('IDType')
+df.pop('project')
+df.pop('package')
+df.pop('complextype')
+X = np.array(df)
+#missing values
+X[X == '?'] = -1
+X = X.astype('float')
+#scaler=MinMaxScaler(feature_range=(0,1))
+#X=scaler.fit_transform(X)
+y = y + 0 
+
+y = np.expand_dims(y, 1)
+model = RandomForestClassifier(criterion='entropy',
+            max_depth=2, max_features='auto', max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=200, n_jobs=None,
+            oob_score=False, random_state=0, verbose=0, warm_start=False)
+model.fit(X, y)
+cv_results = cross_validate(model, X, y, cv=10, return_train_score=False)
+cv_results['test_score'].mean()
+
+#Best accurcy=0.9857142857142858
+
