@@ -14,12 +14,12 @@ X = np.array(df)
 #missing values
 X[X == '?'] = -1
 X = X.astype('float')
-y = y + 0 
+#y = y + 0 
 y = np.expand_dims(y, 1)
 model = DecisionTreeClassifier(criterion='entropy', splitter='best')
 model.fit(X, y)
 cv_results = cross_validate(model, X, y, cv=10, return_train_score=False)
 cv_results['test_score'].mean()
 
-#result =0.9785714285714286
+#result =0.980952380952381
                              
