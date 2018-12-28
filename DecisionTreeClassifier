@@ -18,6 +18,7 @@ X = X.astype('float')
 #scaler=MinMaxScaler(feature_range=(0,1))
 #X=scaler.fit_transform(X)
 #-------------------
+#conert lables to 0 or 1
 y = y + 0 
 y = np.expand_dims(y, 1)
 model = DecisionTreeClassifier(criterion='entropy', splitter='best')
