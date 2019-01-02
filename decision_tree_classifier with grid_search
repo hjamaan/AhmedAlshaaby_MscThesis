@@ -1,0 +1,50 @@
+import pandas as pd
+import numpy as np
+from sklearn import svm
+from sklearn import datasets
+from sklearn import metrics
+from __future__ import print_function
+from sklearn.tree import DecisionTreeClassifier
+from sklearn import datasets
+from sklearn.model_selection import train_test_split
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import classification_report
+from sklearn.svm import SVC
+from sklearn.model_selection import StratifiedKFold
+
+df= pd.read_csv('OS1_Data_Class.csv')
+y = df.pop('is_data_class').values
+df.pop('IDType')
+df.pop('project')
+df.pop('package')
+df.pop('complextype')
+X = np.array(df)
+#missing values
+X[X == '?'] = -1
+X = X.astype('float')
+#Rescaling data
+#scaler=MinMaxScaler(feature_range=(0,1))
+#X=scaler.fit_transform(X)
+#-------------------
+#conert lables to 0 or 1
+y = y + 0 
+#y = np.expand_dims(y, 1)
+#-----------------------
+
+decision_tree_classifier = DecisionTreeClassifier()
+
+
+                 
+parameter_grid  = {'min_samples_split':np.arange(2, 80), 'max_depth': np.arange(2,10), 'criterion':['gini', 'entropy']}
+kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=7)
+
+grid_search = GridSearchCV(decision_tree_classifier, param_grid = parameter_grid, cv = kfold)
+grid_search.fit(X, y)
+
+print ("Best Score: {}".format(grid_search.best_score_))
+print ("Best params: {}".format(grid_search.best_params_))
+
+
+# results 
+# Best Score: 0.9880952380952381
+# Best params: {'criterion': 'entropy', 'max_depth': 3, 'min_samples_split': 2}
