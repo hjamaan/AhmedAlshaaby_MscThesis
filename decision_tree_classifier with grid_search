@@ -9,7 +9,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report
 from sklearn.svm import SVC
 from sklearn.model_selection import StratifiedKFold
-
+from sklearn.preprocessing import MinMaxScaler
 df= pd.read_csv('OS1_Data_Class.csv')
 y = df.pop('is_data_class').values
 df.pop('IDType')
