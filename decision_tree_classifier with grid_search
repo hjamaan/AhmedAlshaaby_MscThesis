@@ -3,7 +3,6 @@ import numpy as np
 from sklearn import svm
 from sklearn import datasets
 from sklearn import metrics
-from __future__ import print_function
 from sklearn.tree import DecisionTreeClassifier
 from sklearn import datasets
 from sklearn.model_selection import train_test_split
