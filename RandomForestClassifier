@@ -63,7 +63,7 @@ print("********************")
 print("********************")
 print("********************")
 
-#############33
+#############
 
 #print ("Best Score: {}".format(grid_search.cv_results_))
 print("********************")
@@ -81,3 +81,29 @@ print("********************confusion matrix********")
 # Printing the confusion matrix
 print(metrics.confusion_matrix(y, preds))
 print("********************")
+
+
+#The outputs are
+#Train accuracy 99.05 (+/- 1.17)
+#Test accuracy 99.05
+#Test accuracy 99.05
+#********************
+#********************
+#********************
+#********************
+#********************
+#********************
+#********************Results********
+ #             precision    recall  f1-score   support
+
+  #         0       0.99      0.99      0.99       280
+   #        1       0.99      0.99      0.99       140
+
+   #micro avg       0.99      0.99      0.99       420
+   #macro avg       0.99      0.99      0.99       420
+#weighted avg       0.99      0.99      0.99       420
+
+#********************confusion matrix********
+#[[278   2]
+ #[  2 138]]
+#********************
