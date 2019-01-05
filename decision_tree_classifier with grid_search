@@ -39,16 +39,36 @@ kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=3)
 grid_search = GridSearchCV(decision_tree_classifier, param_grid = parameter_grid, scoring='accuracy', cv = kfold)
 grid_search.fit(X, y)
 
+
 print ("Best Score: {}".format(grid_search.best_score_))
 print ("Best params: {}".format(grid_search.best_params_))
 print ("Best Score: {}".format(grid_search.best_estimator_))
-
-#the outputs
+expected = y
+predicted = grid_search.predict(X)
+# Printing the results from metrics
+print(metrics.classification_report(expected, predicted))
+# Printing the confusion matrix
+print(metrics.confusion_matrix(expected, predicted))
+print("********************")
+#*****************************
+#Outputs
 #Best Score: 0.9928571428571429
 #Best params: {'criterion': 'gini', 'max_depth': 3, 'min_samples_split': 2}
 #Best Score: DecisionTreeClassifier(class_weight=None, criterion='gini', max_depth=3,
  #           max_features=None, max_leaf_nodes=None,
-  |#          min_impurity_decrease=0.0, min_impurity_split=None,
-    #        min_samples_leaf=1, min_samples_split=2,
-     #       min_weight_fraction_leaf=0.0, presort=False, random_state=None,
-      #      splitter='best')
+  #          min_impurity_decrease=0.0, min_impurity_split=None,
+   #         min_samples_leaf=1, min_samples_split=2,
+    #        min_weight_fraction_leaf=0.0, presort=False, random_state=None,
+    3        splitter='best')
+     #         precision    recall  f1-score   support
+
+      #     0       1.00      1.00      1.00       280
+       #    1       1.00      0.99      1.00       140
+
+   #micro avg       1.00      1.00      1.00       420
+   #macro avg       1.00      1.00      1.00       420
+#weighted avg       1.00      1.00      1.00       420
+
+#[[280   0]
+ #[  1 139]]
+********************
