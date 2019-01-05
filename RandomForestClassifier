@@ -1,15 +1,26 @@
+import numpy as np
+
+from time import time
+from scipy.stats import randint as sp_randint
+
+from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import RandomizedSearchCV
+from sklearn.datasets import load_digits
+from sklearn.ensemble import RandomForestClassifier
 import pandas as pd
 import numpy as np
+from sklearn import svm
 from sklearn import datasets
 from sklearn import metrics
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.model_selection import cross_validate
-from sklearn.model_selection import cross_val_score
-from sklearn.ensemble import RandomForestClassifier
-from sklearn import preprocessing 
+from sklearn import datasets
+from sklearn.model_selection import GridSearchCV
+from sklearn.metrics import classification_report
+from sklearn.svm import SVC
+from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import cross_val_score, cross_val_predict
 from sklearn.preprocessing import MinMaxScaler
-
-df= pd.read_csv('E:\\New folder\Dropbox\Thesis\DataAnalysis\Datasets\ReadyDatasets\OS1_Data_Class.csv')
+df= pd.read_csv('OS1_Data_Class.csv')
 y = df.pop('is_data_class').values
 df.pop('IDType')
 df.pop('project')
@@ -19,20 +30,54 @@ X = np.array(df)
 #missing values
 X[X == '?'] = -1
 X = X.astype('float')
-#scaler=MinMaxScaler(feature_range=(0,1))
-#X=scaler.fit_transform(X)
+#Rescaling data
+scaler=MinMaxScaler(feature_range=(0,1))
+X=scaler.fit_transform(X)
+#-------------------
+#conert lables to 0 or 1
 y = y + 0 
-
-y = np.expand_dims(y, 1)
-model = RandomForestClassifier(criterion='entropy',
-            max_depth=2, max_features='auto', max_leaf_nodes=None,
+#y = np.expand_dims(y, 1)
+#-----------------------
+cv_preds= []
+cv_scores = [] 
+kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=3)
+# build a classifier
+rfc=RandomForestClassifier(bootstrap=True, class_weight=None, criterion='entropy',
+            max_depth=71, max_features='auto', max_leaf_nodes=None,
             min_impurity_decrease=0.0, min_impurity_split=None,
-            min_samples_leaf=1, min_samples_split=2,
-            min_weight_fraction_leaf=0.0, n_estimators=200, n_jobs=None,
-            oob_score=False, random_state=0, verbose=0, warm_start=False)
-model.fit(X, y)
-cv_results = cross_validate(model, X, y, cv=10, return_train_score=False)
-cv_results['test_score'].mean()
+            min_samples_leaf=1, min_samples_split=3,
+            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=None,
+            oob_score=False, random_state=3, verbose=0,
+            warm_start=False)
+scores = cross_val_score(rfc, X, y, cv=kfold, scoring='accuracy')
 
-#Best accurcy=0.9857142857142858
+cv_scores.append(scores.mean()*100)
+print("Train accuracy %0.2f (+/- %0.2f)" % (scores.mean()*100, scores.std()*100))
+ 
+# predict on testing set
+preds = cross_val_predict(rfc, X, y, cv=kfold)
+cv_preds.append(metrics.accuracy_score(y, preds)*100)
+print("Test accuracy %0.2f" % (100*metrics.accuracy_score(y, preds)))
+print("Test accuracy %0.2f" % (100*metrics.accuracy_score(y, preds)))
+print("********************")
+print("********************")
+print("********************")
 
+#############33
+
+#print ("Best Score: {}".format(grid_search.cv_results_))
+print("********************")
+#print ("Best Score: {}".format(grid_search.best_score_))
+print("********************")
+#print ("Best params: {}".format(grid_search.best_params_))
+print("********************")
+#print ("Best Score: {}".format(grid_search.best_estimator_))
+#expected = y
+#predicted = grid_search.predict(X)
+# Printing the results from metrics
+print("********************Results********")
+print(metrics.classification_report(y, preds))
+print("********************confusion matrix********")
+# Printing the confusion matrix
+print(metrics.confusion_matrix(y, preds))
+print("********************")
