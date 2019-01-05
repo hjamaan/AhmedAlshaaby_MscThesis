@@ -9,6 +9,7 @@ from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report
 from sklearn.svm import SVC
 from sklearn.model_selection import StratifiedKFold
+from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import MinMaxScaler
 df= pd.read_csv('OS1_Data_Class.csv')
 y = df.pop('is_data_class').values
@@ -40,8 +41,12 @@ grid_search = GridSearchCV(decision_tree_classifier, param_grid = parameter_grid
 grid_search.fit(X, y)
 
 
+print ("Best Score: {}".format(grid_search.cv_results_))
+print("********************")
 print ("Best Score: {}".format(grid_search.best_score_))
+print("********************")
 print ("Best params: {}".format(grid_search.best_params_))
+print("********************")
 print ("Best Score: {}".format(grid_search.best_estimator_))
 expected = y
 predicted = grid_search.predict(X)
@@ -50,6 +55,7 @@ print(metrics.classification_report(expected, predicted))
 # Printing the confusion matrix
 print(metrics.confusion_matrix(expected, predicted))
 print("********************")
+
 #*****************************
 #Outputs
 #Best Score: 0.9928571428571429
