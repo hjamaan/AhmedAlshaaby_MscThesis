@@ -41,13 +41,22 @@ cv_preds= []
 cv_scores = [] 
 kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=3)
 # build a classifier
-rfc=RandomForestClassifier(bootstrap=True, class_weight=None, criterion='entropy',
-            max_depth=71, max_features='auto', max_leaf_nodes=None,
+rfc=RandomForestClassifier(bootstrap=False, class_weight=None, criterion='gini',
+            max_depth=8, max_features=16, max_leaf_nodes=None,
             min_impurity_decrease=0.0, min_impurity_split=None,
-            min_samples_leaf=1, min_samples_split=3,
-            min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=None,
-            oob_score=False, random_state=3, verbose=0,
+            min_samples_leaf=1, min_samples_split=2,
+            min_weight_fraction_leaf=0.0, n_estimators=20, n_jobs=None,
+            oob_score=False, random_state=1, verbose=0,
             warm_start=False)
+
+# Another attributes 
+#rfc=RandomForestClassifier(bootstrap=True, class_weight=None, criterion='entropy',
+ #           max_depth=71, max_features='auto', max_leaf_nodes=None,
+  #          min_impurity_decrease=0.0, min_impurity_split=None,
+   #         min_samples_leaf=1, min_samples_split=3,
+    #        min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=None,
+     #       oob_score=False, random_state=3, verbose=0,
+      #      warm_start=False)
             
 # Another attributes 
 #RandomForestClassifier(bootstrap=True, class_weight=None, criterion='entropy',
@@ -79,21 +88,23 @@ print("********************")
 
 
 #The outputs are
-#Train accuracy 99.05 (+/- 1.17)
-#Test accuracy 99.05
+#Train accuracy 99.76 (+/- 0.71)
+#********************
+#Test accuracy 99.76
+#********************
 #********************
 #********************
 #********************Results********
  #             precision    recall  f1-score   support
 
-  #         0       0.99      0.99      0.99       280
-   #        1       0.99      0.99      0.99       140
+  #         0       1.00      1.00      1.00       280
+   #        1       0.99      1.00      1.00       140
 
-   #micro avg       0.99      0.99      0.99       420
-   #macro avg       0.99      0.99      0.99       420
-#weighted avg       0.99      0.99      0.99       420
+   #micro avg       1.00      1.00      1.00       420
+   #macro avg       1.00      1.00      1.00       420
+#weighted avg       1.00      1.00      1.00       420
 
 #********************confusion matrix********
-#[[278   2]
- #[  2 138]]
+#[[279   1]
+ #[  0 140]]
 #********************
