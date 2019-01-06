@@ -36,7 +36,6 @@ X=scaler.fit_transform(X)
 #-------------------
 #conert lables to 0 or 1
 y = y + 0 
-#y = np.expand_dims(y, 1)
 #-----------------------
 cv_preds= []
 cv_scores = [] 
@@ -49,31 +48,27 @@ rfc=RandomForestClassifier(bootstrap=True, class_weight=None, criterion='entropy
             min_weight_fraction_leaf=0.0, n_estimators=10, n_jobs=None,
             oob_score=False, random_state=3, verbose=0,
             warm_start=False)
+            
+# Another attributes 
+#RandomForestClassifier(bootstrap=True, class_weight=None, criterion='entropy',
+ #           max_depth=8, max_features=20, max_leaf_nodes=None,
+  #          min_impurity_decrease=0.0, min_impurity_split=None,
+   #         min_samples_leaf=1, min_samples_split=10,
+    #        min_weight_fraction_leaf=0.0, n_estimators=20, n_jobs=None,
+     #       oob_score=False, random_state=3, verbose=0,
+      #      warm_start=False)
 scores = cross_val_score(rfc, X, y, cv=kfold, scoring='accuracy')
 
 cv_scores.append(scores.mean()*100)
 print("Train accuracy %0.2f (+/- %0.2f)" % (scores.mean()*100, scores.std()*100))
- 
+print("********************")
 # predict on testing set
 preds = cross_val_predict(rfc, X, y, cv=kfold)
 cv_preds.append(metrics.accuracy_score(y, preds)*100)
 print("Test accuracy %0.2f" % (100*metrics.accuracy_score(y, preds)))
-print("Test accuracy %0.2f" % (100*metrics.accuracy_score(y, preds)))
 print("********************")
 print("********************")
 print("********************")
-
-#############
-
-#print ("Best Score: {}".format(grid_search.cv_results_))
-print("********************")
-#print ("Best Score: {}".format(grid_search.best_score_))
-print("********************")
-#print ("Best params: {}".format(grid_search.best_params_))
-print("********************")
-#print ("Best Score: {}".format(grid_search.best_estimator_))
-#expected = y
-#predicted = grid_search.predict(X)
 # Printing the results from metrics
 print("********************Results********")
 print(metrics.classification_report(y, preds))
@@ -86,11 +81,6 @@ print("********************")
 #The outputs are
 #Train accuracy 99.05 (+/- 1.17)
 #Test accuracy 99.05
-#Test accuracy 99.05
-#********************
-#********************
-#********************
-#********************
 #********************
 #********************
 #********************Results********
