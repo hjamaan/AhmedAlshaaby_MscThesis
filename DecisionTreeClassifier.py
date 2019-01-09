@@ -32,8 +32,8 @@ mean_imputer = Imputer(missing_values='NaN', strategy='mean', axis=0)
 # Train the imputor on the df dataset
 mean_imputer = mean_imputer.fit(df)
 X = mean_imputer.transform(df.values)
-
-
+scaler=MinMaxScaler(feature_range=(0,1))
+X=scaler.fit_transform(X)
 cv_preds= []
 cv_scores = []              
 kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=3)
