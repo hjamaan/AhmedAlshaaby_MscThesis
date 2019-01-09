@@ -12,8 +12,10 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.model_selection import cross_val_score, cross_val_predict
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import Imputer
+#loading dataset
 df= pd.read_csv('OS1_Data_Class.csv')
 y = df.pop('is_data_class').values
+#__________________preprocessing dataset_________________
 df.pop('IDType')
 df.pop('project')
 df.pop('package')
@@ -24,16 +26,15 @@ df=df.replace(" ", np.nan)
 df=df.replace("", np.nan)
 df=df.replace('', np.nan)
 df=df.replace(' ', np.nan)
-X = np.array(df)
-y = y + 0 
 # Create an imputer object that looks for 'Nan' values, then replaces them with the mean value of the feature by columns (axis=0)
 mean_imputer = Imputer(missing_values='NaN', strategy='mean', axis=0)
-
 # Train the imputor on the df dataset
 mean_imputer = mean_imputer.fit(df)
 X = mean_imputer.transform(df.values)
 scaler=MinMaxScaler(feature_range=(0,1))
 X=scaler.fit_transform(X)
+y = y + 0 
+#____________________________________________________
 cv_preds= []
 cv_scores = []              
 kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=3)
