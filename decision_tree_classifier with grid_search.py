@@ -11,25 +11,26 @@ from sklearn.svm import SVC
 from sklearn.model_selection import StratifiedKFold
 from sklearn.model_selection import cross_val_score
 from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import Imputer
 df= pd.read_csv('OS1_Data_Class.csv')
 y = df.pop('is_data_class').values
 df.pop('IDType')
 df.pop('project')
 df.pop('package')
 df.pop('complextype')
-X = np.array(df)
-#missing values
-X[X == '?'] = -1
-X = X.astype('float')
-#Rescaling data
-scaler=MinMaxScaler(feature_range=(0,1))
-X=scaler.fit_transform(X)
-#-------------------
-#conert lables to 0 or 1
+df=df.replace('?', np.nan)
+df=df.replace("?", np.nan)
+df=df.replace(" ", np.nan)
+df=df.replace("", np.nan)
+df=df.replace('', np.nan)
+df=df.replace(' ', np.nan)
 y = y + 0 
-#y = np.expand_dims(y, 1)
-#-----------------------
+# Create an imputer object that looks for 'Nan' values, then replaces them with the mean value of the feature by columns (axis=0)
+mean_imputer = Imputer(missing_values='NaN', strategy='mean', axis=0)
 
+# Train the imputor on the df dataset
+mean_imputer = mean_imputer.fit(df)
+X = mean_imputer.transform(df.values)
 decision_tree_classifier = DecisionTreeClassifier()
 
 
@@ -55,26 +56,28 @@ print(metrics.classification_report(expected, predicted))
 # Printing the confusion matrix
 print(metrics.confusion_matrix(expected, predicted))
 print("********************")
-
+'''
 #*****************************
-#Outputs
-#Best Score: 0.9928571428571429
-#Best params: {'criterion': 'gini', 'max_depth': 3, 'min_samples_split': 2}
-#Best Score: DecisionTreeClassifier(class_weight=None, criterion='gini', max_depth=3,
- #           max_features=None, max_leaf_nodes=None,
-  #          min_impurity_decrease=0.0, min_impurity_split=None,
-   #         min_samples_leaf=1, min_samples_split=2,
-    #        min_weight_fraction_leaf=0.0, presort=False, random_state=None,
-    3        splitter='best')
-     #         precision    recall  f1-score   support
-
-      #     0       1.00      1.00      1.00       280
-       #    1       1.00      0.99      1.00       140
-
-   #micro avg       1.00      1.00      1.00       420
-   #macro avg       1.00      1.00      1.00       420
-#weighted avg       1.00      1.00      1.00       420
-
-#[[280   0]
- #[  1 139]]
+Best Score: 0.9952380952380953
 ********************
+Best params: {'criterion': 'entropy', 'max_depth': 4, 'min_samples_split': 14}
+********************
+Best Score: DecisionTreeClassifier(class_weight=None, criterion='entropy', max_depth=4,
+            max_features=None, max_leaf_nodes=None,
+            min_impurity_decrease=0.0, min_impurity_split=None,
+            min_samples_leaf=1, min_samples_split=14,
+            min_weight_fraction_leaf=0.0, presort=False, random_state=None,
+            splitter='best')
+              precision    recall  f1-score   support
+
+           0       1.00      1.00      1.00       280
+           1       1.00      0.99      1.00       140
+
+   micro avg       1.00      1.00      1.00       420
+   macro avg       1.00      1.00      1.00       420
+weighted avg       1.00      1.00      1.00       420
+
+[[280   0]
+ [  1 139]]
+********************
+'''
