@@ -20,23 +20,7 @@ from sklearn.svm import SVC
 from sklearn.model_selection import StratifiedKFold
 from sklearn.model_selection import cross_val_score, cross_val_predict
 from sklearn.preprocessing import MinMaxScaler
-df= pd.read_csv('OS1_Data_Class.csv')
-y = df.pop('is_data_class').values
-df.pop('IDType')
-df.pop('project')
-df.pop('package')
-df.pop('complextype')
-X = np.array(df)
-#missing values
-X[X == '?'] = -1
-X = X.astype('float')
-#Rescaling data
-scaler=MinMaxScaler(feature_range=(0,1))
-X=scaler.fit_transform(X)
-#-------------------
-#conert lables to 0 or 1
-y = y + 0 
-#-----------------------
+
 cv_preds= []
 cv_scores = [] 
 kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=3)
