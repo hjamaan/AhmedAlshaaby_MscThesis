@@ -1,8 +1,8 @@
+#-------------------------------------
 import numpy as np
-
 from time import time
 from scipy.stats import randint as sp_randint
-
+from sklearn.preprocessing import Imputer
 from sklearn.model_selection import GridSearchCV
 from sklearn.model_selection import RandomizedSearchCV
 from sklearn.datasets import load_digits
@@ -20,7 +20,28 @@ from sklearn.svm import SVC
 from sklearn.model_selection import StratifiedKFold
 from sklearn.model_selection import cross_val_score, cross_val_predict
 from sklearn.preprocessing import MinMaxScaler
+#--------------load datast---------------------------
+df= pd.read_csv('OS1_Data_Class.csv')
+y = df.pop('is_data_class').values
+df.pop('IDType')
+df.pop('project')
+df.pop('package')
+df.pop('complextype')
+#----------------------- missing values-------------
+df=df.replace('?', np.nan)
+df=df.replace("?", np.nan)
+df=df.replace(" ", np.nan)
+df=df.replace("", np.nan)
+df=df.replace('', np.nan)
+df=df.replace(' ', np.nan)
+y = y + 0 
+# Create an imputer object that looks for 'Nan' values, then replaces them with the mean value of the feature by columns (axis=0)
+mean_imputer = Imputer(missing_values='NaN', strategy='mean', axis=0)
+# Train the imputor on the df dataset
+mean_imputer = mean_imputer.fit(df)
+X = mean_imputer.transform(df.values)
 
+#------------bulid clasifier------
 cv_preds= []
 cv_scores = [] 
 kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=3)
@@ -34,6 +55,7 @@ rfc=RandomForestClassifier(bootstrap=False, class_weight=None, criterion='gini',
             warm_start=False)
 scores = cross_val_score(rfc, X, y, cv=kfold, scoring='accuracy')
 
+#-------------------obtaining the Results----- 
 cv_scores.append(scores.mean()*100)
 print ("Best Score: {}".format(scores))
 print("********************")
@@ -53,31 +75,28 @@ print("********************confusion matrix********")
 # Printing the confusion matrix
 print(metrics.confusion_matrix(y, preds))
 print("********************")
+'''--- the outputs --------
+Best Score: [1.         1.         1.         1.         0.97619048 1.
+ 1.         1.         1.         1.        ]
+********************
+Train accuracy 99.76 (+/- 0.71)
+********************
+Test accuracy 99.76
+********************
+********************
+********************
+********************Results********
+              precision    recall  f1-score   support
 
+           0       1.00      1.00      1.00       280
+           1       0.99      1.00      1.00       140
 
-#The outputs 
+   micro avg       1.00      1.00      1.00       420
+   macro avg       1.00      1.00      1.00       420
+weighted avg       1.00      1.00      1.00       420
 
-
-#Best Score: [1.         1.         1.         1.         0.97619048 1.
- #1.         1.         1.         1.        ]
-#********************
-#Train accuracy 99.76 (+/- 0.71)
-#********************
-#Test accuracy 99.76
-#********************
-#********************
-#********************
-#********************Results********
- #             precision    recall  f1-score   support
-
-  #         0       1.00      1.00      1.00       280
-   #        1       0.99      1.00      1.00       140
-
-   #micro avg       1.00      1.00      1.00       420
-   #macro avg       1.00      1.00      1.00       420
-#weighted avg       1.00      1.00      1.00       420
-
-#********************confusion matrix********
-#[[279   1]
-# [  0 140]]
-#********************
+********************confusion matrix********
+[[279   1]
+ [  0 140]]
+********************
+'''
