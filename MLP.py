@@ -11,7 +11,7 @@ from sklearn.preprocessing import MinMaxScaler
 from sklearn.model_selection import train_test_split
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
- from sklearn.metricsicty import confusion_matrix, f1_score, precision_score, recall_score, accuracy_score
+from sklearn.metricsicty import confusion_matrix, f1_score, precision_score, recall_score, accuracy_score
 from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import confusion_matrix, f1_score, precision_score, recall_score
 from sklearn.metrics import roc_curve, auc
@@ -51,7 +51,8 @@ def specif_score(y_true, y_pred):
   specificity = tn / (tn+fp)
   return specificity
  #finding accuracy and f1 m 
- cvscores = {'acc': [] , 'f1': []}
+ 
+cvscores = {'acc': [] , 'f1': []}
 
 for train, test in kfold.split(X, Y):
   model = create_model()
