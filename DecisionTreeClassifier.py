@@ -34,7 +34,7 @@ X = mean_imputer.transform(df.values)
 scaler=MinMaxScaler(feature_range=(0,1))
 X=scaler.fit_transform(X)
 y = y + 0 
-#____________________________________________________
+#___________________________________________________
 cv_preds= []
 cv_scores = []              
 kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=3)
