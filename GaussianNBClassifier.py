@@ -48,7 +48,7 @@ kfold = StratifiedKFold(n_splits=10, shuffle=True, random_state=3)
 results = cross_val_score(model, X, y, cv=kfold)
 print("Accuracy: %.3f%% (%.3f%%)" % (results.mean()*100.0, results.std()*100.0))
 
-#The outputs 
+#The outputs..... 
 
 #GaussianNB(priors=None, var_smoothing=1e-09)
      #         precision    recall  f1-score   support
