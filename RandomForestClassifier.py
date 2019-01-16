@@ -27,7 +27,7 @@ df.pop('IDType')
 df.pop('project')
 df.pop('package')
 df.pop('complextype')
-#----------------------- missing values-------------
+#---------------------- missing values----------------
 df=df.replace('?', np.nan)
 df=df.replace("?", np.nan)
 df=df.replace(" ", np.nan)
