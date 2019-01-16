@@ -34,7 +34,7 @@ y = y + 0
 model = GaussianNB()
 model.fit(X, y)
 # Print model info
-print("********************")
+print("*****************")
 print(model)
 # Predictions
 expected = y
