@@ -23,8 +23,8 @@ df.pop('package')
 df.pop('complextype')
 X = np.array(df)
 #missing values
-X[X == '?'] = -1
-X[X == 'nan'] = -1
+X[X == '?'] =-1
+X[X == 'nan'] =-1
 X = X.astype('float')
 #Rescaling data
 scaler=MinMaxScaler(feature_range=(0,1))
