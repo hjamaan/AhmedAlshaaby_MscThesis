@@ -15,7 +15,7 @@ from sklearn.preprocessing import Imputer
 #loading dataset
 df= pd.read_csv('OS1_Data_Class.csv')
 y = df.pop('is_data_class').values
-#__________________preprocessing dataset_________________
+#__________________preprocessing dataset________________
 df.pop('IDType')
 df.pop('project')
 df.pop('package')
@@ -101,5 +101,5 @@ weighted avg       1.00      1.00      1.00       420
 ********************confusion matrix********
 [[280   0]
  [  2 138]]
-********************
+****************
 '''
