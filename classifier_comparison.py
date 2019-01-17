@@ -27,8 +27,6 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.model_selection import cross_val_score, cross_val_predict
 from sklearn.preprocessing import MinMaxScaler
 from sklearn.preprocessing import Imputer
-from sklearn.neural_network import MLPClassifier
-from sklearn.neighbors import KNeighborsClassifier
 from sklearn.gaussian_process import GaussianProcessClassifier
 from sklearn.gaussian_process.kernels import RBF
 from sklearn.tree import DecisionTreeClassifier
