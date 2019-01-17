@@ -6,33 +6,20 @@ from sklearn.linear_model import LogisticRegression
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neural_network import MLPClassifier
 from sklearn.neighbors import KNeighborsClassifier
-from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
+from sklearn.discriminant_analysis import LinearDiscriminantAnalysis,  QuadraticDiscriminantAnalysis
 from sklearn.naive_bayes import GaussianNB
 from sklearn import metrics
 from sklearn.svm import SVC
-from sklearn.metrics import accuracy_score
-from sklearn.metrics import recall_score
-from sklearn.metrics import classification_report
-from sklearn.metrics import confusion_matrix
+from sklearn.metrics import accuracy_score, recall_score,classification_report,confusion_matrix
 from sklearn.model_selection import cross_val_predict
-from sklearn.metrics import confusion_matrix
 from sklearn.linear_model import SGDClassifier
-import datetime
-from sklearn import metrics
-from sklearn.tree import DecisionTreeClassifier
 from sklearn import datasets
-from sklearn.model_selection import GridSearchCV
-from sklearn.metrics import classification_report
-from sklearn.model_selection import StratifiedKFold
-from sklearn.model_selection import cross_val_score, cross_val_predict
-from sklearn.preprocessing import MinMaxScaler
-from sklearn.preprocessing import Imputer
+from sklearn.model_selection import GridSearchCV,classification_report,StratifiedKFold,cross_val_score, cross_val_predict
+from sklearn.preprocessing import MinMaxScaler,Imputer
 from sklearn.gaussian_process import GaussianProcessClassifier
 from sklearn.gaussian_process.kernels import RBF
-from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
-from sklearn.naive_bayes import GaussianNB
-from sklearn.discriminant_analysis import QuadraticDiscriminantAnalysis
+
 #loading dataset
 df= pd.read_csv('OS1_Data_Class.csv')
 Y_output = df.pop('is_data_class').values
