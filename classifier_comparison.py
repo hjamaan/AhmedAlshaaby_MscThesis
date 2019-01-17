@@ -146,7 +146,6 @@ plt.boxplot(accuracyresults)
 ax.set_xticklabels(names)
 
 y_pos = np.arange(len(accuracy))
-
 # bar chart accuracy comparison
 graph2 = plt.figure()
 graph2.suptitle('Accuracy Comparison')
