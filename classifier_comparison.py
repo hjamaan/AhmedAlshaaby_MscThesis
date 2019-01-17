@@ -23,7 +23,6 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn import datasets
 from sklearn.model_selection import GridSearchCV
 from sklearn.metrics import classification_report
-from sklearn.svm import SVC
 from sklearn.model_selection import StratifiedKFold
 from sklearn.model_selection import cross_val_score, cross_val_predict
 from sklearn.preprocessing import MinMaxScaler
