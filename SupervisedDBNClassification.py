@@ -28,9 +28,11 @@ X=scaler.fit_transform(X)
 #-------------------
 #conert lables to 0 or 1
 Y = Y + 0 
+#-------------------------------------------------------
 X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.1, random_state=0)
 
 # Training
+#-----------------------------------
 classifier = SupervisedDBNClassification(hidden_layers_structure=[256, 256],
                                          learning_rate_rbm=0.05,
                                          learning_rate=0.1,
