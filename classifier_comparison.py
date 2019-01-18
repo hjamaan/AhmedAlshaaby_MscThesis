@@ -140,6 +140,7 @@ plt.show()
 
 
 #Removing unwantd characters
+#----------------------------------------------------------
 names = str(names)
 names = names.replace('[','').replace(']','').replace("'","")
 accuracy = str(accuracy)
@@ -152,7 +153,7 @@ recall = str(recall)
 recall = recall.replace('[','').replace(']','').replace("'","")
 f1 = str(f1)
 f1 = f1.replace('[','').replace(']','').replace("'","")
-
+#------------------------------------------------------
 
 #Writing to csv
 file=open('E:\kfupm\result1.csv', 'w+')
