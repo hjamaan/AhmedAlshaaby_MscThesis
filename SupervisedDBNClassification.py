@@ -1,5 +1,4 @@
 import numpy as np
-
 np.random.seed(1337)  # for reproducibility
 from sklearn.datasets import load_digits
 from sklearn.model_selection import train_test_split
