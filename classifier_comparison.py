@@ -50,6 +50,7 @@ dataset = "OS1_Data_Class.csv"
 #X_input, Y_output = load_dataset(dataset)
 
 # prepare models
+#--------------------------------------------
 models = []
 models.append(('LR', LogisticRegression()))
 models.append(('KNN', KNeighborsClassifier()))
@@ -67,26 +68,21 @@ models.append(('RF', RandomForestClassifier()))
 models.append(('MLPP', MLPClassifier(alpha=1)))
 models.append(('ADB', AdaBoostClassifier()))
 models.append(('Quadra', QuadraticDiscriminantAnalysis()))
-
+#---------------------------
 
 # evaluate each model in turn
 names = []
-
 accuracyresults = []
 accuracy = []
-
 aucresults = []
 auc = []
-
 f1results = []
 f1 = []
-
 precisionresults = []
 precision = []
-
 recallresults = []
 recall = []
-
+#---------------------------------
 # Specify the N fold
 num_folds = 10
 seed = 7
