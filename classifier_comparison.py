@@ -86,21 +86,4 @@ for name, model in models:
 	print('----------------------------------------')
 
 
-# boxplot for accuracy comparison
-graph = plt.figure()
-graph.suptitle('Accuracy Comparison')
-ax = graph.add_subplot(111)
-plt.boxplot(accuracyresults)
-ax.set_xticklabels(names)
 
-y_pos = np.arange(len(accuracy))
-# bar chart accuracy comparison
-graph2 = plt.figure()
-graph2.suptitle('Accuracy Comparison')
-ax2 = graph2.add_subplot(111)
-plt.bar(y_pos, accuracy, align='center', alpha=0.5)
-plt.xticks(y_pos, names)
-plt.show()
-
-
-#Removing unwantd characters
