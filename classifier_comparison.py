@@ -59,31 +59,6 @@ kfold = StratifiedKFold(n_splits=num_folds, shuffle=True, random_state=seed)
 for name, model in models:
 	names.append(name)
  
-	cv_accuracy = model_selection.cross_val_score(model,  X_input, Y_output, cv=kfold, scoring='accuracy')
-	cv_auc = model_selection.cross_val_score(model,  X_input, Y_output, cv=kfold, scoring='roc_auc')
-	cv_prec = model_selection.cross_val_score(model,  X_input, Y_output, cv=kfold, scoring='precision')
-	cv_recall = model_selection.cross_val_score(model,  X_input, Y_output, cv=kfold, scoring='recall')
-	cv_f1 = model_selection.cross_val_score(model,  X_input, Y_output, cv=kfold, scoring='f1')
-	accuracyresults.append(cv_accuracy)
-	aucresults.append(cv_auc)
-	precisionresults.append(cv_prec)
-	recallresults.append(cv_recall)
-	f1results.append(cv_f1)
-	
-	msg = "%s: %f (%f)" % (name, cv_accuracy.mean(), cv_accuracy.std())
-	accuracy.append(cv_accuracy.mean())
-	auc.append(cv_auc.mean())
-	precision.append(cv_prec.mean())
-	recall.append(cv_recall.mean())
-	f1.append(cv_f1.mean())
-	
-	
-	print('----------------------------------------')
-	print(msg)
-	Y_pred = cross_val_predict(model,X_input,Y_output,cv=kfold)
-	conf_mat = confusion_matrix(Y_output,Y_pred)
-	print(conf_mat)
-	print('----------------------------------------')
 
 
 
