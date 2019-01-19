@@ -104,35 +104,3 @@ plt.show()
 
 
 #Removing unwantd characters
-#----------------------------------------------------------
-names = str(names)
-names = names.replace('[','').replace(']','').replace("'","")
-accuracy = str(accuracy)
-accuracy = accuracy.replace('[','').replace(']','').replace("'","")
-auc = str(auc)
-auc = auc.replace('[','').replace(']','').replace("'","")
-precision = str(precision)
-precision = precision.replace('[','').replace(']','').replace("'","")
-recall = str(recall)
-recall = recall.replace('[','').replace(']','').replace("'","")
-f1 = str(f1)
-f1 = f1.replace('[','').replace(']','').replace("'","")
-#------------------------------------------------------
-
-#Writing to csv
-file=open('E:\kfupm\result1.csv', 'w+')
-file.write(dataset +'\n')
-file.write(str("10-KFold") +'\n')
-file.write(' ,')
-file.write(str(names))
-file.write('\nAccuracy,')
-file.write(str(accuracy))
-file.write('\nAuc,')
-file.write(str(auc))
-file.write('\nPrecision,')
-file.write(str(precision))
-file.write('\nRecall,')
-file.write(str(recall))
-file.write('\nf1,')
-file.write(str(f1))
-file.close()
