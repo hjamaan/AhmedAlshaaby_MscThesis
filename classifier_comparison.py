@@ -23,10 +23,6 @@ datasets = ['OS1_Data_Class.csv','OS1_God_Class.csv', 'OS1_Long_Method.csv', 'OS
         ,'OS2_Azureus_Functional_Decomposition.csv','OS2_Azureus_God_Class.csv','OS2_Azureus_Spaghetti_Code.csv','OS2_Azureus_Swiss_Army_Knife.csv','OS2_Xerces_Functional_Decomposition.csv',
         'OS2_Xerces_God_Class.csv','OS2_Xerces_Spaghetti_Code.csv','OS2_Xerces_Swiss_Army_Knife.csv']
 
-# load dataset
-dataset = "OS1_Data_Class.csv"
-#X_input, Y_output = load_dataset(dataset)
-
 # prepare models
 #--------------------------------------------
 models = []
@@ -48,19 +44,13 @@ models.append(('ADB', AdaBoostClassifier()))
 models.append(('Quadra', QuadraticDiscriminantAnalysis()))
 #---------------------------
 
-# evaluate each model in turn
-names = []
-accuracyresults = []
-accuracy = []
-aucresults = []
-auc = []
-f1results = []
-f1 = []
-precisionresults = []
-precision = []
-recallresults = []
-recall = []
-#---------------------------------
+# Specify the N fold
+num_folds = 10
+seed = 7
+kfold = StratifiedKFold(n_splits=num_folds, shuffle=True, random_state=seed)
+#kfold = cross_val_score.KFold( n_folds=num_folds, random_state=seed)
+df_list = []
+
 # Specify the N fold
 num_folds = 10
 seed = 7
