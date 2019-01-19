@@ -56,8 +56,7 @@ num_folds = 10
 seed = 7
 kfold = StratifiedKFold(n_splits=num_folds, shuffle=True, random_state=seed)
 #kfold = cross_val_score.KFold( n_folds=num_folds, random_state=seed)
-for name, model in models:
-	names.append(name)
+
  
 
 
