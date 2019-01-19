@@ -19,31 +19,9 @@ from sklearn.preprocessing import MinMaxScaler,Imputer
 from sklearn.gaussian_process import GaussianProcessClassifier
 from sklearn.gaussian_process.kernels import RBF
 from sklearn.ensemble import RandomForestClassifier, AdaBoostClassifier
-
-#loading dataset
-#------------------------------------------------
-df= pd.read_csv('OS1_Data_Class.csv')
-Y_output = df.pop('is_data_class').values
-#__________________preprocessing dataset________________
-df.pop('IDType')
-df.pop('project')
-df.pop('package')
-df.pop('complextype')
-df=df.replace('?', np.nan)
-df=df.replace("?", np.nan)
-df=df.replace(" ", np.nan)
-df=df.replace("", np.nan)
-df=df.replace('', np.nan)
-df=df.replace(' ', np.nan)
-# Create an imputer object that looks for 'Nan' values, then replaces them with the mean value of the feature by columns (axis=0)
-mean_imputer = Imputer(missing_values='NaN', strategy='mean', axis=0)
-# Train the imputor on the df dataset
-mean_imputer = mean_imputer.fit(df)
-X_input = mean_imputer.transform(df.values)
-scaler=MinMaxScaler(feature_range=(0,1))
-X_input=scaler.fit_transform(X_input)
-Y_output = Y_output + 0 
-#___________________________________________________
+datasets = ['OS1_Data_Class.csv','OS1_God_Class.csv', 'OS1_Long_Method.csv', 'OS1_Feature_Envy.csv','OS2_ArgoUML_Functional_Decomposition.csv', 'OS2_ArgoUML_God_Class.csv', 'OS2_ArgoUML_Spaghetti_Code.csv', 'OS2_ArgoUML_Swiss_Army_Knife.csv'
+        ,'OS2_Azureus_Functional_Decomposition.csv','OS2_Azureus_God_Class.csv','OS2_Azureus_Spaghetti_Code.csv','OS2_Azureus_Swiss_Army_Knife.csv','OS2_Xerces_Functional_Decomposition.csv',
+        'OS2_Xerces_God_Class.csv','OS2_Xerces_Spaghetti_Code.csv','OS2_Xerces_Swiss_Army_Knife.csv']
 
 # load dataset
 dataset = "OS1_Data_Class.csv"
