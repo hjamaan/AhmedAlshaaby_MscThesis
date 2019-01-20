@@ -3,18 +3,17 @@ from keras.layers import Dense, Activation
 import pandas as pd
 import matplotlib.pyplot as plt
 import numpy as np
-from sklearn import datasets
 from sklearn import metrics
 from sklearn.tree import DecisionTreeClassifier
-from sklearn.model_selection import cross_validate
+from sklearn.model_selection import cross_validate,train_test_split
 from sklearn.preprocessing import MinMaxScaler
-from sklearn.model_selection import train_test_split
 from keras.models import Sequential
 from keras.layers import Dense, Dropout
 from sklearn.metricsicty import confusion_matrix, f1_score, precision_score, recall_score, accuracy_score
 from sklearn.model_selection import StratifiedKFold
 from sklearn.metrics import confusion_matrix, f1_score, precision_score, recall_score
 from sklearn.metrics import roc_curve, auc
+#-----------------------------------------
 df= pd.read_csv('OS1_Data_Class.csv')
 Y = df.pop('is_data_class').values
 df.pop('IDType')
