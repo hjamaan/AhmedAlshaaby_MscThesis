@@ -23,6 +23,7 @@ datasets = ['OS1_Data_Class.csv','OS1_God_Class.csv', 'OS1_Long_Method.csv', 'OS
         ,'OS2_Azureus_Functional_Decomposition.csv','OS2_Azureus_God_Class.csv','OS2_Azureus_Spaghetti_Code.csv','OS2_Azureus_Swiss_Army_Knife.csv','OS2_Xerces_Functional_Decomposition.csv',
         'OS2_Xerces_God_Class.csv','OS2_Xerces_Spaghetti_Code.csv','OS2_Xerces_Swiss_Army_Knife.csv']
 
+
 # prepare models
 #--------------------------------------------
 models = []
@@ -437,9 +438,3 @@ for dataset in datasets:
   file.write(str(f1))
   file.close()
   ++i
-  
- 
- 
-
-
-
