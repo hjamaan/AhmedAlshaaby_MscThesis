@@ -411,7 +411,7 @@ for dataset in datasets:
   f1 = f1.replace('[','').replace(']','').replace("'","")
   #------------------------------------------------------
   
-  i=1
+  
   #Writing to csv
   file=open('Result'+' '+'of'+' '+dataset+'.csv', 'w')
   file.write(dataset +'\n')
@@ -429,5 +429,5 @@ for dataset in datasets:
   file.write('\nf1,')
   file.write(str(f1))
   file.close()
-  ++i
+  
   #--------------End classifiers comparison-----------------
