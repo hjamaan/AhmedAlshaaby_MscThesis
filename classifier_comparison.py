@@ -50,37 +50,6 @@ seed = 7
 kfold = StratifiedKFold(n_splits=num_folds, shuffle=True, random_state=seed)
 df_list = []
 #--------------------------------------------------------
-# Preprocessing dataset 
-def remove_unwanted_attributes_class(dff)
-    dff.pop('IDType')
-    dff.pop('project')
-    dff.pop('package')
-    dff.pop('complextype')
-    return dff
-def remove_unwanted_attributes_method(dff)
-    dff.pop('IDMethod')
-    dff.pop('project')
-    dff.pop('package')
-    dff.pop('complextype')
-    dff.pop('method')
-    return dff  
-def preprocessing_(dff)
-    dff=dff.replace('?', np.nan)
-    dff=dff.replace("?", np.nan)
-    dff=dff.replace(" ", np.nan)
-    dff=dff.replace("", np.nan)
-    dff=dff.replace('', np.nan)
-    dff=dff.replace(' ', np.nan)
-    # Create an imputer object that looks for 'Nan' values, then replaces them with the mean value of the feature by columns (axis=0)
-    mean_imputer = Imputer(missing_values='NaN', strategy='mean', axis=0)
-    # Train the imputor on the df dataset
-    mean_imputer = mean_imputer.fit(dff)
-    x_ = mean_imputer.transform(dff.values)
-    # scalling 
-    scaler=MinMaxScaler(feature_range=(0,1))
-    x_=scaler.fit_transform(x_)
-    return x_  
-#-------------------------------
 for dataset in datasets:
   Model_names=[]
   Accuracy_results=[]
@@ -89,87 +58,291 @@ for dataset in datasets:
   AUC=[]
   f1_results=[]
   f1=[]
-  Precision_results = []
-  Precision = []
-  Recall_results = []
-  Recall = []
-  #---------------------------------
-  #Impot the dataset 
-  
+  Precision_results=[]
+  Precision=[]
+  Recall_results=[]
+  Recall=[]
+#---------------------------------
+
+#---------------Impot the dataset-------------   
   df= pd.read_csv(dataset)
-  # Select the dataset
   
+  # ------Select the dataset------------
   if dataset== 'OS1_Data_Class.csv':
-    y = df.pop('is_data_class').values    
-    X=preprocessing_(df)
-    y = y + 0 
+    Y_output = df.pop('is_data_class').values
+#__________________preprocessing dataset________________
+    df.pop('IDType')
+    df.pop('project')
+    df.pop('package')
+    df.pop('complextype')
+    df=df.replace('?', np.nan)
+    df=df.replace("?", np.nan)
+    df=df.replace(" ", np.nan)
+    df=df.replace("", np.nan)
+    df=df.replace('', np.nan)
+    df=df.replace(' ', np.nan)
+     # Create an imputer object that looks for 'Nan' values, then replaces them with the mean value of the feature by columns (axis=0)
+    mean_imputer = Imputer(missing_values='NaN', strategy='mean', axis=0)
+    # Train the imputor on the df dataset
+    mean_imputer = mean_imputer.fit(df)
+    X_input = mean_imputer.transform(df.values)
+    scaler=MinMaxScaler(feature_range=(0,1))
+    X_input=scaler.fit_transform(X_input)
+    Y_output = Y_output + 0 
 
   elif dataset== 'OS1_God_Class.csv':
-    y = df.pop('is_god_class').values
-    df=remove_unwanted_attributes(df)
-    X=preprocessing_(df)
-    y = y + 0 
-    
+    Y_output = df.pop('is_god_class').values
+    df.pop('IDType')
+    df.pop('project')
+    df.pop('package')
+    df.pop('complextype')
+    df=df.replace('?', np.nan)
+    df=df.replace("?", np.nan)
+    df=df.replace(" ", np.nan)
+    df=df.replace("", np.nan)
+    df=df.replace('', np.nan)
+    df=df.replace(' ', np.nan)
+    # Create an imputer object that looks for 'Nan' values, then replaces them with the mean value of the feature by columns (axis=0)
+    mean_imputer = Imputer(missing_values='NaN', strategy='mean', axis=0)
+     # Train the imputor on the df dataset
+    mean_imputer = mean_imputer.fit(df)
+    X_input = mean_imputer.transform(df.values)
+    scaler=MinMaxScaler(feature_range=(0,1))
+    X_input=scaler.fit_transform(X_input)
+    Y_output = Y_output + 0 
   elif dataset== 'OS1_Feature_Envy.csv':
-    
-    y = df.pop('is_feature_envy').values
-    df=remove_unwanted_attributes(df)
-    X=preprocessing_(df)
-    y = y + 0 
-    
+    Y_output = df.pop('is_feature_envy').values
+    df.pop('IDMethod')
+    df.pop('project')
+    df.pop('package')
+    df.pop('complextype')
+    df.pop('method')
+    df=df.replace('?', np.nan)
+    df=df.replace("?", np.nan)
+    df=df.replace(" ", np.nan)
+    df=df.replace("", np.nan)
+    df=df.replace('', np.nan)
+    df=df.replace(' ', np.nan)
+    # Create an imputer object that looks for 'Nan' values, then replaces them with the mean value of the feature by columns (axis=0)
+    mean_imputer = Imputer(missing_values='NaN', strategy='mean', axis=0)
+     # Train the imputor on the df dataset
+    mean_imputer = mean_imputer.fit(df)
+    X_input = mean_imputer.transform(df.values)
+    scaler=MinMaxScaler(feature_range=(0,1))
+    X_input=scaler.fit_transform(X_input)
+    Y_output = Y_output + 0 
   elif dataset== 'OS1_Long_Method.csv':
-    y = df.pop('is_long_method').values
-    df=remove_unwanted_attributes_method(df)
-    X=preprocessing_(df)
-    y = y + 0 
-    
+    Y_output = df.pop('is_long_method').values
+    df.pop('IDMethod')
+    df.pop('project')
+    df.pop('package')
+    df.pop('complextype')
+    df.pop('method')
+    df=df.replace('?', np.nan)
+    df=df.replace("?", np.nan)
+    df=df.replace(" ", np.nan)
+    df=df.replace("", np.nan)
+    df=df.replace('', np.nan)
+    df=df.replace(' ', np.nan)
+    # Create an imputer object that looks for 'Nan' values, then replaces them with the mean value of the feature by columns (axis=0)
+    mean_imputer = Imputer(missing_values='NaN', strategy='mean', axis=0)
+     # Train the imputor on the df dataset
+    mean_imputer = mean_imputer.fit(df)
+    X_input = mean_imputer.transform(df.values)
+    scaler=MinMaxScaler(feature_range=(0,1))
+    X_input=scaler.fit_transform(X_input)
+    Y_output = Y_output + 0 
   elif dataset== 'OS2_ArgoUML_Functional_Decomposition.csv':
-    y = df.pop('FD').values  
-    X=preprocessing_(df)
+    Y_output = df.pop('FD').values  
+    df=df.replace('?', np.nan)
+    df=df.replace("?", np.nan)
+    df=df.replace(" ", np.nan)
+    df=df.replace("", np.nan)
+    df=df.replace('', np.nan)
+    df=df.replace(' ', np.nan)
+    # Create an imputer object that looks for 'Nan' values, then replaces them with the mean value of the feature by columns (axis=0)
+    mean_imputer = Imputer(missing_values='NaN', strategy='mean', axis=0)
+     # Train the imputor on the df dataset
+    mean_imputer = mean_imputer.fit(df)
+    X_input = mean_imputer.transform(df.values)
+    scaler=MinMaxScaler(feature_range=(0,1))
+    X_input=scaler.fit_transform(X_input)
   
   elif dataset== 'OS2_ArgoUML_God_Class.csv':
-    y = df.pop('BLOB').values  
-    X=preprocessing_(df)
+    Y_output = df.pop('BLOB').values  
+    df=df.replace('?', np.nan)
+    df=df.replace("?", np.nan)
+    df=df.replace(" ", np.nan)
+    df=df.replace("", np.nan)
+    df=df.replace('', np.nan)
+    df=df.replace(' ', np.nan)
+    # Create an imputer object that looks for 'Nan' values, then replaces them with the mean value of the feature by columns (axis=0)
+    mean_imputer = Imputer(missing_values='NaN', strategy='mean', axis=0)
+     # Train the imputor on the df dataset
+    mean_imputer = mean_imputer.fit(df)
+    X_input = mean_imputer.transform(df.values)
+    scaler=MinMaxScaler(feature_range=(0,1))
+    X_input=scaler.fit_transform(X_input)
  
   elif dataset== 'OS2_ArgoUML_Spaghetti_Code.csv':
-    y = df.pop('SC').values  
-    X=preprocessing_(df)
+    Y_output = df.pop('SC').values  
+    df=df.replace('?', np.nan)
+    df=df.replace("?", np.nan)
+    df=df.replace(" ", np.nan)
+    df=df.replace("", np.nan)
+    df=df.replace('', np.nan)
+    df=df.replace(' ', np.nan)
+    # Create an imputer object that looks for 'Nan' values, then replaces them with the mean value of the feature by columns (axis=0)
+    mean_imputer = Imputer(missing_values='NaN', strategy='mean', axis=0)
+     # Train the imputor on the df dataset
+    mean_imputer = mean_imputer.fit(df)
+    X_input = mean_imputer.transform(df.values)
+    scaler=MinMaxScaler(feature_range=(0,1))
+    X_input=scaler.fit_transform(X_input)
   
   elif dataset== 'OS2_ArgoUML_Swiss_Army_Knife.csv':
-    y = df.pop('SAK').values  
-    X=preprocessing_(df)
+    Y_output = df.pop('SAK').values  
+    df=df.replace('?', np.nan)
+    df=df.replace("?", np.nan)
+    df=df.replace(" ", np.nan)
+    df=df.replace("", np.nan)
+    df=df.replace('', np.nan)
+    df=df.replace(' ', np.nan)
+    # Create an imputer object that looks for 'Nan' values, then replaces them with the mean value of the feature by columns (axis=0)
+    mean_imputer = Imputer(missing_values='NaN', strategy='mean', axis=0)
+     # Train the imputor on the df dataset
+    mean_imputer = mean_imputer.fit(df)
+    X_input = mean_imputer.transform(df.values)
+    scaler=MinMaxScaler(feature_range=(0,1))
+    X_input=scaler.fit_transform(X_input)
     
   elif dataset== 'OS2_Azureus_Functional_Decomposition.csv':
-    y = df.pop('FD').values  
-    X=preprocessing_(df)
+    Y_output = df.pop('FD').values  
+    df=df.replace('?', np.nan)
+    df=df.replace("?", np.nan)
+    df=df.replace(" ", np.nan)
+    df=df.replace("", np.nan)
+    df=df.replace('', np.nan)
+    df=df.replace(' ', np.nan)
+    # Create an imputer object that looks for 'Nan' values, then replaces them with the mean value of the feature by columns (axis=0)
+    mean_imputer = Imputer(missing_values='NaN', strategy='mean', axis=0)
+     # Train the imputor on the df dataset
+    mean_imputer = mean_imputer.fit(df)
+    X_input = mean_imputer.transform(df.values)
+    scaler=MinMaxScaler(feature_range=(0,1))
+    X_input=scaler.fit_transform(X_input)
     
   elif dataset== 'OS2_Azureus_God_Class.csv':
-    y = df.pop('BLOB').values  
-    X=preprocessing_(df)
-    
+    Y_output = df.pop('BLOB').values  
+    df=df.replace('?', np.nan)
+    df=df.replace("?", np.nan)
+    df=df.replace(" ", np.nan)
+    df=df.replace("", np.nan)
+    df=df.replace('', np.nan)
+    df=df.replace(' ', np.nan)
+    # Create an imputer object that looks for 'Nan' values, then replaces them with the mean value of the feature by columns (axis=0)
+    mean_imputer = Imputer(missing_values='NaN', strategy='mean', axis=0)
+     # Train the imputor on the df dataset
+    mean_imputer = mean_imputer.fit(df)
+    X_input = mean_imputer.transform(df.values)
+    scaler=MinMaxScaler(feature_range=(0,1))
+    X_input=scaler.fit_transform(X_input)
+   
   elif dataset== 'OS2_Azureus_Spaghetti_Code.csv':
-    y = df.pop('SC').values  
-    X=preprocessing_(df)
+    Y_output = df.pop('SC').values  
+    df=df.replace('?', np.nan)
+    df=df.replace("?", np.nan)
+    df=df.replace(" ", np.nan)
+    df=df.replace("", np.nan)
+    df=df.replace('', np.nan)
+    df=df.replace(' ', np.nan)
+    # Create an imputer object that looks for 'Nan' values, then replaces them with the mean value of the feature by columns (axis=0)
+    mean_imputer = Imputer(missing_values='NaN', strategy='mean', axis=0)
+     # Train the imputor on the df dataset
+    mean_imputer = mean_imputer.fit(df)
+    X_input = mean_imputer.transform(df.values)
+    scaler=MinMaxScaler(feature_range=(0,1))
+    X_input=scaler.fit_transform(X_input)
     
   elif dataset== 'OS2_Azureus_Swiss_Army_Knife.csv':
-    y = df.pop('SAK').values  
-    X=preprocessing_(df)
+    Y_output = df.pop('SAK').values  
+    df=df.replace('?', np.nan)
+    df=df.replace("?", np.nan)
+    df=df.replace(" ", np.nan)
+    df=df.replace("", np.nan)
+    df=df.replace('', np.nan)
+    df=df.replace(' ', np.nan)
+    # Create an imputer object that looks for 'Nan' values, then replaces them with the mean value of the feature by columns (axis=0)
+    mean_imputer = Imputer(missing_values='NaN', strategy='mean', axis=0)
+     # Train the imputor on the df dataset
+    mean_imputer = mean_imputer.fit(df)
+    X_input = mean_imputer.transform(df.values)
+    scaler=MinMaxScaler(feature_range=(0,1))
+    X_input=scaler.fit_transform(X_input)
     
   elif dataset== 'OS2_Xerces_Functional_Decomposition.csv':
-    y = df.pop('FD').values  
-    X=preprocessing_(df)
+    Y_output = df.pop('FD').values  
+    df=df.replace('?', np.nan)
+    df=df.replace("?", np.nan)
+    df=df.replace(" ", np.nan)
+    df=df.replace("", np.nan)
+    df=df.replace('', np.nan)
+    df=df.replace(' ', np.nan)
+    # Create an imputer object that looks for 'Nan' values, then replaces them with the mean value of the feature by columns (axis=0)
+    mean_imputer = Imputer(missing_values='NaN', strategy='mean', axis=0)
+     # Train the imputor on the df dataset
+    mean_imputer = mean_imputer.fit(df)
+    X_input = mean_imputer.transform(df.values)
+    scaler=MinMaxScaler(feature_range=(0,1))
+    X_input=scaler.fit_transform(X_input)
     
   elif dataset== 'OS2_Xerces_God_Class.csv':
-    y = df.pop('BLOB').values  
-    X=preprocessing_(df)
+    Y_output = df.pop('BLOB').values  
+    df=df.replace('?', np.nan)
+    df=df.replace("?", np.nan)
+    df=df.replace(" ", np.nan)
+    df=df.replace("", np.nan)
+    df=df.replace('', np.nan)
+    df=df.replace(' ', np.nan)
+    # Create an imputer object that looks for 'Nan' values, then replaces them with the mean value of the feature by columns (axis=0)
+    mean_imputer = Imputer(missing_values='NaN', strategy='mean', axis=0)
+     # Train the imputor on the df dataset
+    mean_imputer = mean_imputer.fit(df)
+    X_input = mean_imputer.transform(df.values)
+    scaler=MinMaxScaler(feature_range=(0,1))
+    X_input=scaler.fit_transform(X_input)
     
   elif dataset== 'OS2_Xerces_Spaghetti_Code.csv':
-    y = df.pop('SC').values  
-    X=preprocessing_(df)
-    
+    Y_output = df.pop('SC').values  
+    df=df.replace('?', np.nan)
+    df=df.replace("?", np.nan)
+    df=df.replace(" ", np.nan)
+    df=df.replace("", np.nan)
+    df=df.replace('', np.nan)
+    df=df.replace(' ', np.nan)
+    # Create an imputer object that looks for 'Nan' values, then replaces them with the mean value of the feature by columns (axis=0)
+    mean_imputer = Imputer(missing_values='NaN', strategy='mean', axis=0)
+     # Train the imputor on the df dataset
+    mean_imputer = mean_imputer.fit(df)
+    X_input = mean_imputer.transform(df.values)
+    scaler=MinMaxScaler(feature_range=(0,1))
+    X_input=scaler.fit_transform(X_input)
+     
   elif dataset== 'OS2_Xerces_Swiss_Army_Knife.csv':
-    y = df.pop('SAK').values  
-    X=preprocessing_(df)
+    Y_output = df.pop('SAK').values  
+    df=df.replace('?', np.nan)
+    df=df.replace("?", np.nan)
+    df=df.replace(" ", np.nan)
+    df=df.replace("", np.nan)
+    df=df.replace('', np.nan)
+    df=df.replace(' ', np.nan)
+    # Create an imputer object that looks for 'Nan' values, then replaces them with the mean value of the feature by columns (axis=0)
+    mean_imputer = Imputer(missing_values='NaN', strategy='mean', axis=0)
+     # Train the imputor on the df dataset
+    mean_imputer = mean_imputer.fit(df)
+    X_input = mean_imputer.transform(df.values)
+    scaler=MinMaxScaler(feature_range=(0,1))
+    X_input=scaler.fit_transform(X_input)
   print('----------------------------------------')
   print('----------------------------------------')
   print('----------------------------------------')
@@ -179,22 +352,22 @@ for dataset in datasets:
   print('----------------------------------------')
   
   for name, model in models:
-    names.append(name)
-    cv_accuracy = model_selection.cross_val_score(model,  X_input, Y_output, cv=kfold, scoring='accuracy')
+    Model_names.append(name)
+    cv_accuracy = model_selection.cross_val_score(model,  X_input,Y_output, cv=kfold, scoring='accuracy')
     cv_auc = model_selection.cross_val_score(model,  X_input, Y_output, cv=kfold, scoring='roc_auc')
     cv_prec = model_selection.cross_val_score(model,  X_input, Y_output, cv=kfold, scoring='precision')
     cv_recall = model_selection.cross_val_score(model,  X_input, Y_output, cv=kfold, scoring='recall')
     cv_f1 = model_selection.cross_val_score(model,  X_input, Y_output, cv=kfold, scoring='f1')
-    accuracyresults.append(cv_accuracy)
-    aucresults.append(cv_auc)
-    precisionresults.append(cv_prec)
-    recallresults.append(cv_recall)
-    f1results.append(cv_f1)
+    Accuracy_results.append(cv_accuracy)
+    AUC_results.append(cv_auc)
+    Precision_results.append(cv_prec)
+    Recall_results.append(cv_recall)
+    f1_results.append(cv_f1)
     msg="%s: %f (%f)"%(name, cv_accuracy.mean(), cv_accuracy.std())
-    accuracy.append(cv_accuracy.mean())
-    auc.append(cv_auc.mean())
-    precision.append(cv_prec.mean())
-    recall.append(cv_recall.mean())
+    Accuracy.append(cv_accuracy.mean())
+    AUC.append(cv_auc.mean())
+    Precision.append(cv_prec.mean())
+    Recall.append(cv_recall.mean())
     f1.append(cv_f1.mean())
     print('----------------------------------------')
     print(msg)
@@ -203,36 +376,37 @@ for dataset in datasets:
     print(conf_mat)
     print('----------------------------------------')
 
+  
 
-  # boxplot for accuracy comparison
+#----------------boxplot for accuracy comparison-----
   graph = plt.figure()
   graph.suptitle('Accuracy Comparison')
   ax = graph.add_subplot(111)
-  plt.boxplot(accuracyresults)
-  ax.set_xticklabels(names)
+  plt.boxplot(Accuracy_results)
+  ax.set_xticklabels(Model_names)
 
-  y_pos = np.arange(len(accuracy))
+  y_pos = np.arange(len(Accuracy))
   # bar chart accuracy comparison
   graph2 = plt.figure()
   graph2.suptitle('Accuracy Comparison')
   ax2 = graph2.add_subplot(111)
-  plt.bar(y_pos, accuracy, align='center', alpha=0.5)
-  plt.xticks(y_pos, names)
+  plt.bar(y_pos, Accuracy, align='center', alpha=0.5)
+  plt.xticks(y_pos, Model_names)
   plt.show()
 
 
   #Removing unwantd characters
   #----------------------------------------------------------
-  names = str(names)
-  names = names.replace('[','').replace(']','').replace("'","")
-  accuracy = str(accuracy)
-  accuracy = accuracy.replace('[','').replace(']','').replace("'","")
-  auc = str(auc)
-  auc = auc.replace('[','').replace(']','').replace("'","")
-  precision = str(precision)
-  precision = precision.replace('[','').replace(']','').replace("'","")
-  recall = str(recall)
-  recall = recall.replace('[','').replace(']','').replace("'","")
+  Model_names = str(Model_names)
+  Model_names = Model_names.replace('[','').replace(']','').replace("'","")
+  Accuracy = str(Accuracy)
+  Accuracy = Accuracy.replace('[','').replace(']','').replace("'","")
+  AUC = str(AUC)
+  AUC = AUC.replace('[','').replace(']','').replace("'","")
+  Precision = str(Precision)
+  Precision = Precision.replace('[','').replace(']','').replace("'","")
+  Recall = str(Recall)
+  Recall = Recall.replace('[','').replace(']','').replace("'","")
   f1 = str(f1)
   f1 = f1.replace('[','').replace(']','').replace("'","")
   #------------------------------------------------------
@@ -243,16 +417,17 @@ for dataset in datasets:
   file.write(dataset +'\n')
   file.write(str("10-KFold") +'\n')
   file.write(' ,')
-  file.write(str(names))
+  file.write(str(Model_names))
   file.write('\nAccuracy,')
-  file.write(str(accuracy))
+  file.write(str(Accuracy))
   file.write('\nAuc,')
-  file.write(str(auc))
+  file.write(str(AUC))
   file.write('\nPrecision,')
-  file.write(str(precision))
+  file.write(str(Precision))
   file.write('\nRecall,')
-  file.write(str(recall))
+  file.write(str(Recall))
   file.write('\nf1,')
   file.write(str(f1))
   file.close()
   ++i
+  #--------------End classifiers comparison-----------------
