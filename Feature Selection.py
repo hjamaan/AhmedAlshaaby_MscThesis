@@ -22,7 +22,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_selection import RFE
 from sklearn.linear_model import LogisticRegression
 import warnings
-from sklearn.feature_selection import SelectPercentile, f_classif,chi2, mutual_info_classif
+from sklearn.feature_selection import SelectPercentile, f_classif,chi2, mutual_info_classif,SelectKBest,GenericUnivariate
 from sklearn.ensemble import ExtraTreesClassifier
 from sklearn.decomposition import PCA
 from sklearn import  svm
