@@ -19,29 +19,31 @@ from sklearn.preprocessing import MinMaxScaler,Imputer
 from sklearn.gaussian_process import GaussianProcessClassifier
 from sklearn.gaussian_process.kernels import RBF
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.naive_bayes import BernoulliNB, MultinomialNB
+from sklearn.ensemble import GradientBoostingClassifier
 
 #Defin the list of datasets 
 datasets = ['OS1_Data_Class.csv','OS1_God_Class.csv', 'OS1_Long_Method.csv', 'OS1_Feature_Envy.csv','OS2_ArgoUML_Functional_Decomposition.csv', 'OS2_ArgoUML_God_Class.csv', 'OS2_ArgoUML_Spaghetti_Code.csv', 'OS2_ArgoUML_Swiss_Army_Knife.csv'
         ,'OS2_Azureus_Functional_Decomposition.csv','OS2_Azureus_God_Class.csv','OS2_Azureus_Spaghetti_Code.csv','OS2_Azureus_Swiss_Army_Knife.csv','OS2_Xerces_Functional_Decomposition.csv',
-        'OS2_Xerces_God_Class.csv','OS2_Xerces_Spaghetti_Code.csv','OS2_Xerces_Swiss_Army_Knife.csv']
-
+        'OS2_Xerces_God_Class.csv','OS2_Xerces_Spaghetti_Code.csv','OS2_Xerces_Swiss_Army_Knife.csv','OS2_Functional_Decomposition', 'OS2_God_Class', 'OS2_Spaghetti_Code', 'OS2_Swiss_Army_Knife']
 
 
 # Defined  models
 #--------------------------------------------
 models = []
-models.append(('RF', RandomForestClassifier()))
-models.append(('SVM', SVC()))
-models.append(('CART', DecisionTreeClassifier()))
-models.append(('LR', LogisticRegression()))
-models.append(('KNN', KNeighborsClassifier()))
-models.append(('NB', GaussianNB()))
+models.append(('RF', RandomForestClassifier(random_state = 42)))
+models.append(('SVM', SVC(random_state = 42)))
+models.append(('CART', DecisionTreeClassifier(random_state = 42)))
+models.append(('LR', LogisticRegression(random_state = 42)))
+models.append(('GBC', GradientBoostingClassifier(n_estimators=300,random_state = 42)))
+models.append(('MNB', MultinomialNB(alpha=0.001)))
 models.append(('MLP', MLPClassifier()))
-models.append(('SGDC', SGDClassifier()))
-models.append(('SVM_linear', SVC()))
-models.append(('SVM_GAMA', SVC()))
-models.append(('GaussianP', GaussianProcessClassifier()))
-models.append(('Quadra', QuadraticDiscriminantAnalysis()))
+models.append(('SGDC', SGDClassifier(random_state = 42)))
+models.append(('GaussianP', GaussianProcessClassifier(random_state = 42)))
+models.append(('BNB', BernoulliNB(alpha=0.001)))
+
+               
+
 #---------------------------
 # Specify the K-fold Crossvalidation
 num_folds = 10
@@ -131,53 +133,35 @@ for dataset in datasets:
     X=preprocessing_(df)
     y = y + 0 
     
-  elif dataset== 'OS2_ArgoUML_Functional_Decomposition.csv':
+  elif dataset in ['OS2_ArgoUML_Functional_Decomposition','OS2_ArgoUML_Functional_Decomposition2',
+                          'OS2_Azureus_Functional_Decomposition','OS2_Azureus_Functional_Decomposition2',
+                          'OS2_Xerces_Functional_Decomposition','OS2_Xerces_Functional_Decomposition2',
+                          'OS2_Functional_Decomposition', 'OS2_Functional_Decomposition2']:
     y = df.pop('FD').values  
     X=preprocessing_(df)
   
-  elif dataset== 'OS2_ArgoUML_God_Class.csv':
+  elif dataset in ['OS2_ArgoUML_God_Class','OS2_ArgoUML_God_Class2',
+                          'OS2_Azureus_God_Class', 'OS2_Azureus_God_Class2',
+                          'OS2_Xerces_God_Class', 'OS2_Xerces_God_Class2',
+                          'OS2_God_Class', 'OS2_God_Class2']:
     y = df.pop('BLOB').values  
     X=preprocessing_(df)
  
-  elif dataset== 'OS2_ArgoUML_Spaghetti_Code.csv':
+  elif dataset in ['OS2_ArgoUML_Spaghetti_Code','OS2_ArgoUML_Spaghetti_Code2',
+                          'OS2_Azureus_Spaghetti_Code',  'OS2_Azureus_Spaghetti_Code2',
+                          'OS2_Xerces_Spaghetti_Code','OS2_Xerces_Spaghetti_Code2',
+                          'OS2_Spaghetti_Code', 'OS2_Spaghetti_Code2']:
     y = df.pop('SC').values  
     X=preprocessing_(df)
   
-  elif dataset== 'OS2_ArgoUML_Swiss_Army_Knife.csv':
+  elif dataset in ['OS2_ArgoUML_Swiss_Army_Knife','OS2_ArgoUML_Swiss_Army_Knife2',
+                          'OS2_Azureus_Swiss_Army_Knife', 'OS2_Azureus_Swiss_Army_Knife2',
+                          'OS2_Xerces_Swiss_Army_Knife','OS2_Xerces_Swiss_Army_Knife2',
+                          'OS2_Swiss_Army_Knife', 'OS2_Swiss_Army_Knife2']:
     y = df.pop('SAK').values  
     X=preprocessing_(df)
-    
-  elif dataset== 'OS2_Azureus_Functional_Decomposition.csv':
-    y = df.pop('FD').values  
-    X=preprocessing_(df)
-    
-  elif dataset== 'OS2_Azureus_God_Class.csv':
-    y = df.pop('BLOB').values  
-    X=preprocessing_(df)
-    
-  elif dataset== 'OS2_Azureus_Spaghetti_Code.csv':
-    y = df.pop('SC').values  
-    X=preprocessing_(df)
-    
-  elif dataset== 'OS2_Azureus_Swiss_Army_Knife.csv':
-    y = df.pop('SAK').values  
-    X=preprocessing_(df)
-    
-  elif dataset== 'OS2_Xerces_Functional_Decomposition.csv':
-    y = df.pop('FD').values  
-    X=preprocessing_(df)
-    
-  elif dataset== 'OS2_Xerces_God_Class.csv':
-    y = df.pop('BLOB').values  
-    X=preprocessing_(df)
-    
-  elif dataset== 'OS2_Xerces_Spaghetti_Code.csv':
-    y = df.pop('SC').values  
-    X=preprocessing_(df)
-    
-  elif dataset== 'OS2_Xerces_Swiss_Army_Knife.csv':
-    y = df.pop('SAK').values  
-    X=preprocessing_(df)
+  else:
+        print("dataset %s does not exist" % dataset)
 #-----------------End selecting dataset---------------------------------
   print('----------------------------------------')
   print('----------------------------------------')
@@ -247,7 +231,7 @@ for dataset in datasets:
   f1 = f1.replace('[','').replace(']','').replace("'","")
   #------------------------------------------------------
   
-  
+  i=1
   #Writing to csv
   file=open('Result'+' '+'of'+' '+dataset+'.csv', 'w')
   file.write(dataset +'\n')
@@ -265,5 +249,6 @@ for dataset in datasets:
   file.write('\nf1,')
   file.write(str(f1))
   file.close()
-  
+  ++i
   #--------------End classifiers comparison-----------------
+
