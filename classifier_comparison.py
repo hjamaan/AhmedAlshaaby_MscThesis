@@ -21,11 +21,14 @@ from sklearn.gaussian_process.kernels import RBF
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.naive_bayes import BernoulliNB, MultinomialNB
 from sklearn.ensemble import GradientBoostingClassifier
+import warnings
 
 #Defin the list of datasets 
 datasets = ['OS1_Data_Class.csv','OS1_God_Class.csv', 'OS1_Long_Method.csv', 'OS1_Feature_Envy.csv','OS2_ArgoUML_Functional_Decomposition.csv', 'OS2_ArgoUML_God_Class.csv', 'OS2_ArgoUML_Spaghetti_Code.csv', 'OS2_ArgoUML_Swiss_Army_Knife.csv'
         ,'OS2_Azureus_Functional_Decomposition.csv','OS2_Azureus_God_Class.csv','OS2_Azureus_Spaghetti_Code.csv','OS2_Azureus_Swiss_Army_Knife.csv','OS2_Xerces_Functional_Decomposition.csv',
-        'OS2_Xerces_God_Class.csv','OS2_Xerces_Spaghetti_Code.csv','OS2_Xerces_Swiss_Army_Knife.csv','OS2_Functional_Decomposition', 'OS2_God_Class', 'OS2_Spaghetti_Code', 'OS2_Swiss_Army_Knife']
+        'OS2_Xerces_God_Class.csv','OS2_Xerces_Spaghetti_Code.csv','OS2_Xerces_Swiss_Army_Knife.csv',
+            'OS2_Functional_Decomposition.csv', 'OS2_God_Class.csv', 'OS2_Spaghetti_Code.csv', 'OS2_Swiss_Army_Knife.csv']
+
 
 
 # Defined  models
@@ -33,7 +36,7 @@ datasets = ['OS1_Data_Class.csv','OS1_God_Class.csv', 'OS1_Long_Method.csv', 'OS
 models = []
 models.append(('RF', RandomForestClassifier(random_state = 42)))
 models.append(('SVM', SVC(random_state = 42)))
-models.append(('CART', DecisionTreeClassifier(random_state = 42)))
+models.append(('DT', DecisionTreeClassifier(random_state = 42)))
 models.append(('LR', LogisticRegression(random_state = 42)))
 models.append(('GBC', GradientBoostingClassifier(n_estimators=300,random_state = 42)))
 models.append(('MNB', MultinomialNB(alpha=0.001)))
@@ -43,7 +46,7 @@ models.append(('GaussianP', GaussianProcessClassifier(random_state = 42)))
 models.append(('BNB', BernoulliNB(alpha=0.001)))
 
                
-
+warnings.simplefilter(action='ignore', category=FutureWarning)
 #---------------------------
 # Specify the K-fold Crossvalidation
 num_folds = 10
@@ -133,31 +136,31 @@ for dataset in datasets:
     X=preprocessing_(df)
     y = y + 0 
     
-  elif dataset in ['OS2_ArgoUML_Functional_Decomposition','OS2_ArgoUML_Functional_Decomposition2',
-                          'OS2_Azureus_Functional_Decomposition','OS2_Azureus_Functional_Decomposition2',
-                          'OS2_Xerces_Functional_Decomposition','OS2_Xerces_Functional_Decomposition2',
-                          'OS2_Functional_Decomposition', 'OS2_Functional_Decomposition2']:
+  elif dataset in ['OS2_ArgoUML_Functional_Decomposition.csv','OS2_ArgoUML_Functional_Decomposition2.csv',
+                          'OS2_Azureus_Functional_Decomposition.csv','OS2_Azureus_Functional_Decomposition2.csv',
+                          'OS2_Xerces_Functional_Decomposition.csv','OS2_Xerces_Functional_Decomposition2.csv',
+                          'OS2_Functional_Decomposition.csv', 'OS2_Functional_Decomposition2.csv']:
     y = df.pop('FD').values  
     X=preprocessing_(df)
   
-  elif dataset in ['OS2_ArgoUML_God_Class','OS2_ArgoUML_God_Class2',
-                          'OS2_Azureus_God_Class', 'OS2_Azureus_God_Class2',
-                          'OS2_Xerces_God_Class', 'OS2_Xerces_God_Class2',
-                          'OS2_God_Class', 'OS2_God_Class2']:
+  elif dataset in ['OS2_ArgoUML_God_Class.csv','OS2_ArgoUML_God_Class2.csv',
+                          'OS2_Azureus_God_Class.csv', 'OS2_Azureus_God_Class2.csv',
+                          'OS2_Xerces_God_Class.csv', 'OS2_Xerces_God_Class2.csv',
+                          'OS2_God_Class.csv', 'OS2_God_Class2.csv']:
     y = df.pop('BLOB').values  
     X=preprocessing_(df)
  
-  elif dataset in ['OS2_ArgoUML_Spaghetti_Code','OS2_ArgoUML_Spaghetti_Code2',
-                          'OS2_Azureus_Spaghetti_Code',  'OS2_Azureus_Spaghetti_Code2',
-                          'OS2_Xerces_Spaghetti_Code','OS2_Xerces_Spaghetti_Code2',
-                          'OS2_Spaghetti_Code', 'OS2_Spaghetti_Code2']:
+  elif dataset in ['OS2_ArgoUML_Spaghetti_Code.csv','OS2_ArgoUML_Spaghetti_Code2.csv',
+                          'OS2_Azureus_Spaghetti_Code.csv',  'OS2_Azureus_Spaghetti_Code2.csv',
+                          'OS2_Xerces_Spaghetti_Code.csv','OS2_Xerces_Spaghetti_Code2.csv',
+                          'OS2_Spaghetti_Code.csv', 'OS2_Spaghetti_Code2.csv']:
     y = df.pop('SC').values  
     X=preprocessing_(df)
   
-  elif dataset in ['OS2_ArgoUML_Swiss_Army_Knife','OS2_ArgoUML_Swiss_Army_Knife2',
-                          'OS2_Azureus_Swiss_Army_Knife', 'OS2_Azureus_Swiss_Army_Knife2',
-                          'OS2_Xerces_Swiss_Army_Knife','OS2_Xerces_Swiss_Army_Knife2',
-                          'OS2_Swiss_Army_Knife', 'OS2_Swiss_Army_Knife2']:
+  elif dataset in ['OS2_ArgoUML_Swiss_Army_Knife.csv','OS2_ArgoUML_Swiss_Army_Knife2.csv',
+                          'OS2_Azureus_Swiss_Army_Knife.csv', 'OS2_Azureus_Swiss_Army_Knife2.csv',
+                          'OS2_Xerces_Swiss_Army_Knife.csv','OS2_Xerces_Swiss_Army_Knife2.csv',
+                          'OS2_Swiss_Army_Knife.csv', 'OS2_Swiss_Army_Knife2.csv']:
     y = df.pop('SAK').values  
     X=preprocessing_(df)
   else:
@@ -183,7 +186,7 @@ for dataset in datasets:
     Precision_results.append(cv_prec)
     Recall_results.append(cv_recall)
     f1_results.append(cv_f1)
-    msg="%s: %f (%f)"%(name, cv_accuracy.mean(), cv_accuracy.std())
+    msg="%s: %f (%f)"%(name, cv_auc.mean(), cv_auc.std())
     Accuracy.append(cv_accuracy.mean())
     AUC.append(cv_auc.mean())
     Precision.append(cv_prec.mean())
@@ -198,19 +201,19 @@ for dataset in datasets:
 
   
 
-#----------------boxplot for accuracy comparison-----
+#----------------boxplot for AUC comparison-----
   graph = plt.figure()
-  graph.suptitle('Accuracy Comparison')
+  graph.suptitle('AUC Comparison')
   ax = graph.add_subplot(111)
-  plt.boxplot(Accuracy_results)
+  plt.boxplot(AUC_results)
   ax.set_xticklabels(Model_names)
 
-  y_pos = np.arange(len(Accuracy))
+  y_pos = np.arange(len(AUC))
   # bar chart accuracy comparison
   graph2 = plt.figure()
-  graph2.suptitle('Accuracy Comparison')
+  graph2.suptitle('AUC Comparison')
   ax2 = graph2.add_subplot(111)
-  plt.bar(y_pos, Accuracy, align='center', alpha=0.5)
+  plt.bar(y_pos, AUC, align='center', alpha=0.5)
   plt.xticks(y_pos, Model_names)
   plt.show()
 
